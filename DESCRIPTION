@@ -1,0 +1,12 @@
+Package: getDoneISM
+Title: Basic data processing and data analysis tools for Instant Survey Management
+Version: 0.0.0.9000
+Authors@R: 
+    person("Hanna", "Kurovska", , "solem675@gmail.com", role = c("aut", "cre"),
+           comment = c(ORCID = "0000-0001-7257-6875"))
+Description: The pipeline of tools for facilitating data cleaning, elementary data analysis and .ppt data visualization.
+License: `use_mit_license()`, `use_gpl3_license()` or friends to pick a
+    license
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.1
