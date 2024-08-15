@@ -95,6 +95,16 @@ get_recoded_into_ds <- function(others_ds_done, ds, questions, idvar = "_uuid", 
     }
   }
 
+  for(var in new_vars){
+    aggr_var <- sub("/.*", "", var)
+    ds_rec <- ds_rec |>
+      mutate(!!sym(var):= case_when(
+        !is.na(!!sym(aggr_var)) & !is.na(!!sym(var)) ~ !!sym(var),
+        !is.na(!!sym(aggr_var)) & is.na(!!sym(var)) ~ 0,
+        is.na(!!sym(aggr_var)) ~ NA_real_
+      ))
+  }
+
   return(ds_rec)
 }
 
