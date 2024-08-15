@@ -32,8 +32,8 @@ get_cleaning_log <- function(raw, clean, idvar = "_uuid", moda = F){
   d_in_raw$where <- rep("In RAW dataset, but not in CLEAN dataset", nrow(d_in_raw))
   d_in_clean <- as.data.frame(in_clean)
   d_in_clean$where <- rep("In CLEAN dataset, but not in RAW dataset", nrow(d_in_clean))
-  names(in_raw) <- c("var_name", "where")
-  names(in_clean) <- c("var_name", "where")
+  names(d_in_raw) <- c("var_name", "where")
+  names(d_in_clean) <- c("var_name", "where")
   diff_vars <- rbind(d_in_raw, d_in_clean)
 
   #adding missing variables to dataframes to allow for value change comparison
