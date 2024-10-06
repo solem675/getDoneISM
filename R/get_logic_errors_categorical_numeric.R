@@ -42,9 +42,13 @@ get_logic_errors_categorical_numeric  <- function(ds, logic_frame, idvar = "_uui
       select(!!sym(idvar), !!sym(enum_col), !!sym(date_col), !!sym(enum_com_col), !!sym(index_col)) |>
       mutate(issue = paste0("Inconsistent answers: ", val, " in ", var, " and ", crval, " is ", sign, " ", crvar), comment = NA_character_)
 
-    log_checks_issues_num <- rbind(log_checks_issues_num, logic_temp)
-    log_checks_issues_num <- log_checks_issues_num |>
+    logic_temp <- logic_temp |>
       select(-contains("complementary_col"))
+
+
+    log_checks_issues_num <- rbind(log_checks_issues_num, logic_temp)
+    #log_checks_issues_num <- log_checks_issues_num |>
+     # select(-contains("complementary_col"))
   }
 
   log_checks_issues_num$variable_to_change <- NA
