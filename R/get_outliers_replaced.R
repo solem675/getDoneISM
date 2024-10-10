@@ -26,11 +26,11 @@ get_outliers_replaced <- function(outliers, ds, idvar = "_uuid"){
     for(id in id_outl_i){
       #replace with median
       if(numeric_outliers[numeric_outliers$variable == vi & numeric_outliers$idvar == id, "action"] == "median"){
-        ds[which(ds[,idvar] == id), vi] <- numeric_outliers[which(numeric_outliers[,"idvar"] == id & numeric_outliers[,"idvar"] == id), "median_value"]
+        ds[which(ds[,idvar] == id), vi] <- numeric_outliers[which(numeric_outliers[,"idvar"] == id & numeric_outliers["variable_name"] == vi), "median_value"]
       }
       #replace with quantile value (1st or 99th)
       if(numeric_outliers[numeric_outliers$variable == vi & numeric_outliers$idvar == id, "action"] == "q_v"){
-        ds[which(ds[,idvar] == id), vi] <- numeric_outliers[which(numeric_outliers[,"idvar"] == id & numeric_outliers[,"idvar"] == id), "q_v"]
+        ds[which(ds[,idvar] == id), vi] <- numeric_outliers[which(numeric_outliers[,"idvar"] == id & numeric_outliers["variable_name"] == vi), "q_v"]
       }
       #replace with NA
       if(numeric_outliers[numeric_outliers$variable == vi & numeric_outliers$idvar == id, "action"] == "na"){

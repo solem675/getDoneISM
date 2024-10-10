@@ -17,11 +17,12 @@ get_logic_applied <- function(ds, logic_frame_issues, idvar = "_uuid"){
 
 
   for(vi in nam_logic){
+
     id_logic_i <- logic_frame_issues[logic_frame_issues$variable_to_change == vi, idvar]
 
     for(id in id_logic_i){
 
-      ds[which(ds[idvar] == id), vi] <- logic_frame_issues$correct_value[which(logic_frame_issues[idvar] == id & logic_frame_issues$variable_to_change == vi)]
+      ds[which(ds[idvar] == id), vi] <- logic_frame_issues$correct_value[which(logic_frame_issues[idvar] == id & logic_frame_issues$variable_to_change == vi)][1]
 
     }
 
