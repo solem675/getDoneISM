@@ -147,7 +147,7 @@ get_recoded_into_ds <- function(others_ds_done, ds, questions, idvar = "_uuid", 
     mutate(value = NA)
 
   other_to_upd <- rbind(others_long_1, other_long_0, other_txt_rm) |>
-    distinct(`_uuid`, column, .keep_all = T)
+    distinct(!!sym(idvar), column, .keep_all = T)
 
 
   duplicates <- other_to_upd %>%
