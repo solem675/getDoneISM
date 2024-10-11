@@ -135,7 +135,7 @@ get_recoded_into_ds <- function(others_ds_done, ds, questions, idvar = "_uuid", 
 
   other_long_0 <-   others_ds_done |>
     filter(!is.na(other_column)) |>
-    mutate(dummy_other = 0) |>
+    mutate(dummy_other = "0") |>
     select(!!sym(idvar), other_column, dummy_other) |>
     rename(column = other_column,
            value = dummy_other)
