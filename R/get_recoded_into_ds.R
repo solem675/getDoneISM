@@ -150,10 +150,6 @@ get_recoded_into_ds <- function(others_ds_done, ds, questions, idvar = "_uuid", 
     distinct(!!sym(idvar), column, .keep_all = T)
 
 
-  duplicates <- other_to_upd %>%
-    select(`_uuid`, column) %>%
-    filter(duplicated(.) | duplicated(., fromLast = TRUE))
-
   ds_rec_long_1 <- ds_rec_long |>
     rows_update(other_to_upd, by = c(paste0(idvar), "column"))
 
