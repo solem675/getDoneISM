@@ -65,64 +65,64 @@ get_recoded_into_ds <- function(others_ds_done, ds, questions, idvar = "_uuid", 
   ##### rewrite ##################################################################
 
   ds_rec1 <- ds_rec
-  nam_other_r <- unique(others_ds_done$recoded_into_var)
-
-  # replace selections
-  vi = nam_other_r[136] # - DEBUGGING
-  for(vi in nam_other_r){ #for each "other" variable
-    id_other_i <- others_ds_done[others_ds_done$recoded_into_var == vi, idvar]
-
-    other_text <- unique(others_ds_done[others_ds_done$recoded_into_var == vi, "variable"])
-
-    other_num <- unique(others_ds_done[others_ds_done$recoded_into_var == vi, "other_column"])
-
-    ds_rec <- ds_rec |>
-      rowwise() |>
-      #  filter(!!(idvar) %in% id_other_i) |>
-      group_by(!!sym(idvar)) |>
-      mutate(!!sym(vi) := ifelse(!!sym(idvar) %in% id_other_i,
-                                 others_ds_done$recoded_into_val[which(!!sym(idvar) == id_other_i[id_other_i == !!sym(idvar)] & others_ds_done$recoded_into_var == vi)], !!sym(vi)))
-
-    if(!is.na(other_num)){
-      ds_rec <- ds_rec |>
-        mutate(!!sym(other_num) := ifelse(!!sym(idvar) %in% id_other_i, "0", !!sym(other_num)))
-    }
-
-  }
-
-  #duplicates <- others_ds_done %>%
-  # select(`_uuid`, recoded_into_var, recoded_into_val) %>%
-  #filter(duplicated(.) | duplicated(., fromLast = TRUE))
-
-  # duplicates <- others_ds_done %>%
-  # select(`_uuid`, other_column) %>%
-  # filter(duplicated(.) | duplicated(., fromLast = TRUE))
-
-  others_ds_done_w <- others_ds_done |>
-    distinct(`_uuid`, recoded_into_var, recoded_into_val, .keep_all = T) |>
-    select(!!sym(idvar), variable, other_value, recoded_into_var, recoded_into_val, other_column) |>
-    pivot_wider(id_cols = !!sym(idvar), names_from = recoded_into_var, values_from = recoded_into_val, values_fill = NA)
-
-  ds_rec <-  ds_rec1 |>
-    left_join(others_ds_done_w, by = idvar, suffix = c("", "_rec")) |>
-    mutate(across(all_of(unique(others_ds_done$recoded_into_var)),
-                  ~ ifelse(!is.na(!!sym(paste0(cur_column(), "_rec"))), !!sym(paste0(cur_column(), "_rec")), .))) %>%
-    select(-ends_with("_rec"))
-
-
-
-  others_null <- others_ds_done |>
-    filter(!is.na(other_column)) |>
-    mutate(other_dummy = 0) |>
-    distinct(`_uuid`, other_column, .keep_all = T) |>
-    select(!!sym(idvar), other_column, other_dummy) |>
-    pivot_wider(id_cols = !!sym(idvar), names_from = other_column, values_from = other_dummy, values_fill = NA)
-
-  ds_rec <-  ds_rec |>
-    left_join(others_null, by = idvar, suffix = c("", "_nul")) |>
-    mutate(across(all_of(unique(others_ds_done$other_column)),
-                  ~ ifelse(!is.na(other_column), recoded_into_val, .))) %>%
-    select(-ends_with("_nul"))
+  # nam_other_r <- unique(others_ds_done$recoded_into_var)
+  #
+  # # replace selections
+  # vi = nam_other_r[136] # - DEBUGGING
+  # for(vi in nam_other_r){ #for each "other" variable
+  #   id_other_i <- others_ds_done[others_ds_done$recoded_into_var == vi, idvar]
+  #
+  #   other_text <- unique(others_ds_done[others_ds_done$recoded_into_var == vi, "variable"])
+  #
+  #   other_num <- unique(others_ds_done[others_ds_done$recoded_into_var == vi, "other_column"])
+  #
+  #   ds_rec <- ds_rec |>
+  #     rowwise() |>
+  #     #  filter(!!(idvar) %in% id_other_i) |>
+  #     group_by(!!sym(idvar)) |>
+  #     mutate(!!sym(vi) := ifelse(!!sym(idvar) %in% id_other_i,
+  #                                others_ds_done$recoded_into_val[which(!!sym(idvar) == id_other_i[id_other_i == !!sym(idvar)] & others_ds_done$recoded_into_var == vi)], !!sym(vi)))
+  #
+  #   if(!is.na(other_num)){
+  #     ds_rec <- ds_rec |>
+  #       mutate(!!sym(other_num) := ifelse(!!sym(idvar) %in% id_other_i, "0", !!sym(other_num)))
+  #   }
+  #
+  # }
+  #
+  # #duplicates <- others_ds_done %>%
+  # # select(`_uuid`, recoded_into_var, recoded_into_val) %>%
+  # #filter(duplicated(.) | duplicated(., fromLast = TRUE))
+  #
+  # # duplicates <- others_ds_done %>%
+  # # select(`_uuid`, other_column) %>%
+  # # filter(duplicated(.) | duplicated(., fromLast = TRUE))
+  #
+  # others_ds_done_w <- others_ds_done |>
+  #   distinct(`_uuid`, recoded_into_var, recoded_into_val, .keep_all = T) |>
+  #   select(!!sym(idvar), variable, other_value, recoded_into_var, recoded_into_val, other_column) |>
+  #   pivot_wider(id_cols = !!sym(idvar), names_from = recoded_into_var, values_from = recoded_into_val, values_fill = NA)
+  #
+  # ds_rec <-  ds_rec1 |>
+  #   left_join(others_ds_done_w, by = idvar, suffix = c("", "_rec")) |>
+  #   mutate(across(all_of(unique(others_ds_done$recoded_into_var)),
+  #                 ~ ifelse(!is.na(!!sym(paste0(cur_column(), "_rec"))), !!sym(paste0(cur_column(), "_rec")), .))) %>%
+  #   select(-ends_with("_rec"))
+  #
+  #
+  #
+  # others_null <- others_ds_done |>
+  #   filter(!is.na(other_column)) |>
+  #   mutate(other_dummy = 0) |>
+  #   distinct(`_uuid`, other_column, .keep_all = T) |>
+  #   select(!!sym(idvar), other_column, other_dummy) |>
+  #   pivot_wider(id_cols = !!sym(idvar), names_from = other_column, values_from = other_dummy, values_fill = NA)
+  #
+  # ds_rec <-  ds_rec |>
+  #   left_join(others_null, by = idvar, suffix = c("", "_nul")) |>
+  #   mutate(across(all_of(unique(others_ds_done$other_column)),
+  #                 ~ ifelse(!is.na(other_column), recoded_into_val, .))) %>%
+  #   select(-ends_with("_nul"))
   ###
   ds_rec_long <- ds_rec1 |>
     mutate(across(is.numeric, ~as.character(.))) |>
