@@ -56,7 +56,7 @@ get_crosstabs_formatted <- function(crosstabs, questions, choices, sep = "/", la
 
   cr_tabs1$choice_label <- coalesce(cr_tabs1[, paste0(language_label, "_ch")], cr_tabs1[, "option"])
   }
-  supressWarnings(cr_tabs1 <- cr_tabs1 |> unnest())
+  suppressWarnings(cr_tabs1 <- cr_tabs1 |> unnest())
   cr_tabs1 <- cr_tabs1 |> distinct()
     return(cr_tabs1)
 }
