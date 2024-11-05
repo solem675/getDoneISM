@@ -10,7 +10,7 @@
 #'
 #' @examples
 
-get_weighted_numerics <- function(ds, numeric_vars, ind_var, weights){
+get_weighted_numerics <- function(ds, numeric_vars, ind_var, weights, wide = T){
   nam_ds <- names(ds)
 
   numericds <- as.vector(numeric_vars[numeric_vars %in% nam_ds])
