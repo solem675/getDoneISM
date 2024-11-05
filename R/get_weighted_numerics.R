@@ -48,7 +48,6 @@ get_weighted_numerics <- function(ds, numeric_vars, ind_var, weights){
 
   num_q1ds_all <- num_wtds |>
     summarise_at(vars(vars), ~ ifelse(all(is.na(.)), NA_real_, Hmisc::wtd.quantile(., probs = c(0.25), weight = !!sym(weights), na.rm = T))) |>
-    summarise_at(vars(vars), ~ ifelse(all(is.na(.)), NA_real_, Hmisc::wtd.quantile(., probs = c(0.25), weight = !!sym(weights), na.rm = T))) |>
     mutate(stat = "q1")
 
   num_q1ds_all <- num_wtds |>
