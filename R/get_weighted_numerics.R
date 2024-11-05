@@ -50,18 +50,12 @@ get_weighted_numerics <- function(ds, numeric_vars, ind_var, weights, wide = T){
     summarise_at(vars(vars), ~ ifelse(all(is.na(.)), NA_real_, Hmisc::wtd.quantile(., probs = c(0.25), weight = !!sym(weights), na.rm = T))) |>
     mutate(stat = "q1")
 
-  num_wt_q1ds_all <- num_wtds |>
-    summarise_at(vars(vars), ~ ifelse(all(is.na(.)), NA_real_, Hmisc::wtd.quantile(., probs = c(0.25), weight = !!sym(weights), na.rm = T))) |>
-    mutate(stat = "q1")
 
   num_wt_q3ds <- num_wtds |>
     group_by(!!sym(ind_var)) |>
     summarise_at(vars(vars), ~ ifelse(all(is.na(.)), NA_real_, Hmisc::wtd.quantile(., probs = c(0.75), weight = !!sym(weights), na.rm = T))) |>
     mutate(stat = "q3")
 
-  num_wt_q3ds_all <- num_wtds |>
-    summarise_at(vars(vars), ~ ifelse(all(is.na(.)), NA_real_, Hmisc::wtd.quantile(., probs = c(0.75), weight = !!sym(weights), na.rm = T))) |>
-    mutate(stat = "q3")
 
   num_wt_q3ds_all <- num_wtds |>
     summarise_at(vars(vars), ~ ifelse(all(is.na(.)), NA_real_, Hmisc::wtd.quantile(., probs = c(0.75), weight = !!sym(weights), na.rm = T))) |>
