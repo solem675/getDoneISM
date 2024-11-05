@@ -76,7 +76,7 @@ get_weighted_numerics <- function(ds, numeric_vars, ind_var, weights){
     summarise_at(vars(vars), ~min(.,  na.rm = T)) |>
     mutate(stat = "min")
 
-  num_maxds <- num_wtds |>
+  num_wt_maxds <- num_wtds |>
     group_by(!!sym(ind_var)) |>
     summarise_at(vars(vars), ~max(., na.rm = T)) |>
     mutate(stat = "max")
