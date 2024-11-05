@@ -25,56 +25,56 @@ get_weighted_numerics <- function(ds, numeric_vars, ind_var, weights){
 
   num_wt_mends <- num_wtds |>
     group_by(!!sym(ind_var)) |>
-    summarise_at(vars(vars), ~ try(weighted.mean(.,  w = !!sym(weights), na.rm = T)) |>
-    mutate(stat = "weighted mean"))
+    summarise_at(vars(vars), ~weighted.mean(.,  w = !!sym(weights), na.rm = T)) |>
+    mutate(stat = "weighted mean")
 
   num_wt_mends_all <- num_wtds |>
-    summarise_at(vars(vars), ~try(weighted.mean(.,  w = !!sym(weights), na.rm = T)) |>
-    mutate(stat = "weighted mean"))
+    summarise_at(vars(vars), ~weighted.mean(.,  w = !!sym(weights), na.rm = T)) |>
+    mutate(stat = "weighted mean")
 
   num_wt_medds <- num_wtds |>
     group_by(!!sym(ind_var)) |>
-    summarise_at(vars(vars), ~try(ergm::wtd.median(.,  weight = !!sym(weights), na.rm = T)) |>
-    mutate(stat = "weighted median"))
+    summarise_at(vars(vars), ~ergm::wtd.median(.,  weight = !!sym(weights), na.rm = T)) |>
+    mutate(stat = "weighted median")
 
   num_wt_medds_all <- num_wtds |>
-    summarise_at(vars(vars), ~try(ergm::wtd.median(.,  weight = !!sym(weights), na.rm = T)) |>
-    mutate(stat = "weighted median"))
+    summarise_at(vars(vars), ~ergm::wtd.median(.,  weight = !!sym(weights), na.rm = T)) |>
+    mutate(stat = "weighted median")
 
   num_q1ds <- num_wtds |>
     group_by(!!sym(ind_var)) |>
-    summarise_at(vars(vars), ~ try(Hmisc::wtd.quantile(., probs = c(0.25), weight = !!sym(weights), na.rm = T)) |>
-    mutate(stat = "q1"))
+    summarise_at(vars(vars), ~ Hmisc::wtd.quantile(., probs = c(0.25), weight = !!sym(weights), na.rm = T)) |>
+    mutate(stat = "q1")
 
   num_q1ds_all <- num_wtds |>
-    summarise_at(vars(vars), ~ try(Hmisc::wtd.quantile(., probs = c(0.25), weight = !!sym(weights), na.rm = T)) |>
-    mutate(stat = "q1"))
+    summarise_at(vars(vars), ~ Hmisc::wtd.quantile(., probs = c(0.25), weight = !!sym(weights), na.rm = T)) |>
+    mutate(stat = "q1")
 
   num_q3ds <- num_wtds |>
     group_by(!!sym(ind_var)) |>
-    summarise_at(vars(vars), ~ try(Hmisc::wtd.quantile(., probs = c(0.75), weight = !!sym(weights), na.rm = T)) |>
-    mutate(stat = "q3"))
+    summarise_at(vars(vars), ~ Hmisc::wtd.quantile(., probs = c(0.75), weight = !!sym(weights), na.rm = T)) |>
+    mutate(stat = "q3")
 
   num_q3ds_all <- num_wtds |>
-    summarise_at(vars(vars), ~ try(Hmisc::wtd.quantile(., probs = c(0.75), weight = !!sym(weights), na.rm = T)) |>
-    mutate(stat = "q3"))
+    summarise_at(vars(vars), ~ Hmisc::wtd.quantile(., probs = c(0.75), weight = !!sym(weights), na.rm = T)) |>
+    mutate(stat = "q3")
 
   num_minds <- num_wtds |>
     group_by(!!sym(ind_var)) |>
-    summarise_at(vars(vars), ~ try(min(., na.rm = T))) |>
+    summarise_at(vars(vars), ~min(., na.rm = T)) |>
     mutate(stat = "min")
 
   num_minds_all <- num_wtds |>
-    summarise_at(vars(vars), ~ try(min(.,  na.rm = T))) |>
+    summarise_at(vars(vars), ~min(.,  na.rm = T)) |>
     mutate(stat = "min")
 
   num_maxds <- num_wtds |>
     group_by(!!sym(ind_var)) |>
-    summarise_at(vars(vars), ~ try(max(., na.rm = T))) |>
+    summarise_at(vars(vars), ~max(., na.rm = T)) |>
     mutate(stat = "max")
 
   num_maxds_all <- num_wtds |>
-    summarise_at(vars(vars), ~ try(max(.,  na.rm = T))) |>
+    summarise_at(vars(vars), ~max(.,  na.rm = T)) |>
     mutate(stat = "max")
 
   num_wt_couds <- num_wtds|>
@@ -124,3 +124,4 @@ get_weighted_numerics <- function(ds, numeric_vars, ind_var, weights){
 
 
 }
+
